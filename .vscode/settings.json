@@ -1,0 +1,6 @@
+{
+	"eslint.workingDirectories": [
+		"../src",
+		"../src/components" // replace {PATH_TO_CLIENT} with you own path
+	]
+}
