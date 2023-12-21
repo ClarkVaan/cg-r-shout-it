@@ -6,15 +6,10 @@ import NewShout from "./NewShout";
 import classes from "./ShoutList.module.css";
 
 function ShoutList({ modalIsVisible, onStopShouting }) {
-  const [userName, setUserValue] = useState('')
-  const [shoutMessage, setMessageValue] = useState('')
+  const [shouts, setShout] = useState([]);
 
-  function userChangeHandler(event) {
-    setUserValue(event.target.value);
-  }
-
-  function messageChangeHandler(event) {
-    setMessageValue(event.target.value);
+  function addShoutHandler(shoutData) {
+    setShout((existingShouts) => [shoutData, ...existingShouts]); //add new shout to existing
   }
 
   return (
@@ -22,14 +17,23 @@ function ShoutList({ modalIsVisible, onStopShouting }) {
       {modalIsVisible === true ? (
         <Modal onClose={onStopShouting}>
           <NewShout
-            onUserChange={userChangeHandler}
-            onMessageChange={messageChangeHandler}
+            onCancel={onStopShouting}
+            onAddShout={addShoutHandler}
           />
         </Modal>
       ) : null}
-      <ul className={classes.shoutList}>
-        <Shout user={userName} message={shoutMessage} />
-      </ul>
+
+      {shouts.length > 0 ?
+        <ul className={classes.shoutList}>
+          {shouts.map((shout) => <Shout key={shout.message} message={shout.message} user={shout.user} />)}
+        </ul>
+        : shouts.length === 0 ? (
+          <div style={{ textAlign: "center", color: "#3d3d3d", fontStyle: "italic", paddingTop: "1rem" }}>
+            <h2>No shouts yet...</h2>
+            <p>Be the first by clicking the <b>New Shout</b> button!</p>
+          </div>
+        ) : null
+      }
     </>
   );
 }
