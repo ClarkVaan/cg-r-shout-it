@@ -1,15 +1,39 @@
+import { useState } from "react";
+
+import Modal from "./Modal";
 import Shout from "./Shout";
 import NewShout from "./NewShout";
 import classes from "./ShoutList.module.css";
 
 function ShoutList() {
-  return(
+  const [modalIsVisible, setModalIsVisible] = useState(true);
+  function hideModalHandler() {
+    setModalIsVisible(false);
+  }
+
+  const [userName, setUserValue] = useState('')
+  function userChangeHandler(event) {
+    setUserValue(event.target.value);
+  }
+
+  const [shoutMessage, setMessageValue] = useState('')
+  function messageChangeHandler(event) {
+    setMessageValue(event.target.value);
+  }
+
+  return (
     <>
-    <NewShout />
-    <ul className={classes.shoutList}>
-      <Shout user = "Clark" message = "Hello" />
-      <Shout user = "Heidee" message = "Hi" />
-    </ul>
+      {modalIsVisible === true ? (
+        <Modal onClose={hideModalHandler}>
+          <NewShout
+            onUserChange={userChangeHandler}
+            onMessageChange={messageChangeHandler}
+          />
+        </Modal>
+      ) : null}
+      <ul className={classes.shoutList}>
+        <Shout user={userName} message={shoutMessage} />
+      </ul>
     </>
   );
 }

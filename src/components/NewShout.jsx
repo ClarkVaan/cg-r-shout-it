@@ -1,25 +1,15 @@
-import {useState} from "react";
 import classes from "./NewShout.module.css";
 
-function NewShout() {
-  const stateData = useState('');
-  
-  let shoutMessage = '';
-
-  function changeBodyHandler(event) {
-    shoutMessage= event.target.value;
-  }
-
+function NewShout(props) {
   return (
     <form className={classes.form}>
       <p>
         <label htmlFor="body">Shout</label>
-        <textarea id="body" required rows={3} onChange={changeBodyHandler}/>
+        <textarea id="body" placeholder="Make your voice heard!" required rows={3} onChange={props.onMessageChange} />
       </p>
-      <p>{shoutMessage}</p>
       <p>
         <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required />
+        <input type="text" id="name" placeholder="John Doe" onChange={props.onUserChange} />
       </p>
     </form>
   );
