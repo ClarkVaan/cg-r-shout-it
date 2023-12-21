@@ -5,18 +5,14 @@ import Shout from "./Shout";
 import NewShout from "./NewShout";
 import classes from "./ShoutList.module.css";
 
-function ShoutList() {
-  const [modalIsVisible, setModalIsVisible] = useState(true);
-  function hideModalHandler() {
-    setModalIsVisible(false);
-  }
-
+function ShoutList({ modalIsVisible, onStopShouting }) {
   const [userName, setUserValue] = useState('')
+  const [shoutMessage, setMessageValue] = useState('')
+
   function userChangeHandler(event) {
     setUserValue(event.target.value);
   }
 
-  const [shoutMessage, setMessageValue] = useState('')
   function messageChangeHandler(event) {
     setMessageValue(event.target.value);
   }
@@ -24,7 +20,7 @@ function ShoutList() {
   return (
     <>
       {modalIsVisible === true ? (
-        <Modal onClose={hideModalHandler}>
+        <Modal onClose={onStopShouting}>
           <NewShout
             onUserChange={userChangeHandler}
             onMessageChange={messageChangeHandler}
